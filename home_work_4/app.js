@@ -235,6 +235,7 @@ function sortTable() {
     });
 
     tbody.remove();
+    tbody.innerHTML = "";
     create_table(result);
     return  result
 }
