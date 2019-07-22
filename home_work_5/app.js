@@ -177,8 +177,6 @@ const tasks = [
       const { target } = e;
       const parent = target.closest('[data-task-id]');
       const id = parent.dataset.taskId;
-      console.log(target)
-      console.log(parent)
 
       if (target.classList.contains('complete-btn')) {
           objOfTasks[id].completed = true;
@@ -221,12 +219,9 @@ const tasks = [
         noData(false)
     }
     function returnTask(e) {
-      console.log('!!!!!!!!!!!!!!!!!!')
         const { target } = e;
         const parent = target.closest('[data-task-id]');
         const id = parent.dataset.taskId;
-        console.log(target)
-        console.log(parent)
 
         if (target.classList.contains('return-btn')) {
             objOfTasks[id].completed = false;
