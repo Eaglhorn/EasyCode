@@ -48,7 +48,6 @@ const tasks = [
     section.appendChild(divConteiner);
 
   renderTasks();
-  /*onComlete();*/
   form.addEventListener('submit', onFormSubmitHandler);
   tasksList.addEventListener('click', onDeleteHandler);
   allTask.addEventListener('click',allTasks);
@@ -90,7 +89,7 @@ const tasks = [
     const completeBtn = document.createElement('button');
       completeBtn.textContent = 'Complete task';
       completeBtn.classList.add('btn', 'btn-success','ml-3', 'complete-btn');
-      completeBtn.addEventListener('click', onComlete);
+      completeBtn.addEventListener('click', onComplete);
 
 
     const article = document.createElement('p');
@@ -101,11 +100,6 @@ const tasks = [
           li.style = 'background-color : yellow';
           completeBtn.textContent = 'Return to hell';
           completeBtn.classList.add('btn', 'btn-info','ml-3', 'return-btn');
-          completeBtn.addEventListener('click', onComlete);
-
-          if(completeBtn.classList.contains('return-btn')) {
-              completeBtn.addEventListener('click', returnTask)
-          }
       }
 
     li.appendChild(span);
@@ -160,7 +154,6 @@ const tasks = [
   function noData(nd) {
     const fragment = document.createDocumentFragment();
     if(Object.keys(objOfTasks).length == 0 && nd) {
-        nd = true;
       const li = listItemTemplate(objOfTasks);
       tasksList.innerHTML = '';
       li.textContent = 'No data to display';
@@ -173,27 +166,26 @@ const tasks = [
     }
   }
 
-  function onComlete(e) {
+  function onComplete(e) {
       const { target } = e;
       const parent = target.closest('[data-task-id]');
       const id = parent.dataset.taskId;
-
-      if (target.classList.contains('complete-btn')) {
-          objOfTasks[id].completed = true;
-          parent.style = 'background-color : yellow';
-          target.textContent = 'Return to hell';
-          target.classList.add('btn', 'btn-info','ml-3', 'return-btn');
-      }
-      if (objOfTasks[id].completed) {
-          parent.style = 'background-color : yellow';
-          target.textContent = 'Return to hell';
-          target.classList.add('btn', 'btn-info','ml-3', 'return-btn');
-      }
+      if (!objOfTasks[id].completed) {
+              objOfTasks[id].completed = true;
+              parent.style = "background-color : yellow";
+              target.textContent = "Return to hell";
+              target.classList.add("btn-info", "return-btn");
+          } else {
+              objOfTasks[id].completed = false;
+              parent.style = "background-color : none";
+              target.textContent = "Complete task";
+             target.classList.remove("btn-info", "return-btn");
+         }
 
   }
 
     function unComplete(e) {
-        noData(false)
+        noData(false);
         const {target} = e;
         tasksList.innerHTML = '';
         const fragment = document.createDocumentFragment();
@@ -202,38 +194,17 @@ const tasks = [
             let filterArray = keys.filter(item => {
                 return item.completed === false;
             });
-
             Object.values(filterArray).forEach(res =>  {
                 const li = listItemTemplate(res);
                 fragment.appendChild(li);
                 tasksList.appendChild(fragment);
 
             });
-
         }
     }
-
     function allTasks() {
         tasksList.innerHTML = '';
         renderTasks();
         noData(false)
-    }
-    function returnTask(e) {
-        const { target } = e;
-        const parent = target.closest('[data-task-id]');
-        const id = parent.dataset.taskId;
-
-        if (target.classList.contains('return-btn')) {
-            objOfTasks[id].completed = false;
-            parent.style = 'background-color : white';
-            target.textContent = 'Completed task';
-            target.classList.add('btn', 'btn-success','ml-3', 'complete-btn');
-            target.classList.remove( 'btn-info', 'return-btn');
-        }
-        if (!objOfTasks[id].completed) {
-            parent.style = 'background-color : white';
-            target.textContent = 'Completed';
-            target.classList.add('btn', 'btn-success','ml-3', 'complete-btn');
-        }
     }
 })(tasks);
