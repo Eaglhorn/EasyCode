@@ -74,19 +74,19 @@ const calculator = (function () {
         return newValue;
     }
     function multiply(value) {
-        newValue = newValue * value
+        newValue = newValue * value;
         return newValue;
     }
     function divide(value) {
         newValue = newValue / value;
         return newValue;
     }
-    function power() {
-         newValue = newValue * newValue;
+    function power(value) {
+         newValue = value * value;
         return newValue
     }
     function getValue() {
-        return newValue;
+        return newValue.toFixed(2);
     }
 
     return {
@@ -103,6 +103,7 @@ const calculator = (function () {
 calculator.setValue(10);
 calculator.concat(5);
 calculator.multiply(2);
-calculator.getValue(10);
+calculator.getValue();
+
 
 /*-------------------------------------*/
